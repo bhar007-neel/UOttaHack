@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris Co-pilot</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="bar">
+      <div>
+        <h1>Tetris Co-pilot</h1>
+        <p class="subtitle">Human-in-the-loop, automation-assisted play</p>
+      </div>
+      <div class="controls">
+        <button id="mode-advise" class="pill active" data-mode="advise">Advise-only</button>
+        <button id="mode-timed" class="pill" data-mode="timed">Timed assist</button>
+        <button id="mode-autopilot" class="pill" data-mode="autopilot">Autopilot</button>
+        <button id="mode-emergency" class="pill" data-mode="emergency">Emergency drop</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="board-panel">
+        <canvas id="board" width="260" height="520"></canvas>
+        <div class="hud">
+          <div>Score: <span id="score">0</span></div>
+          <div>Lines: <span id="lines">0</span></div>
+          <div>Level: <span id="level">1</span></div>
+          <div>Mode: <span id="mode-label">Advise-only</span></div>
+          <div>Auto in: <span id="countdown">-</span></div>
+        </div>
+        <h3>Next pieces</h3>
+        <canvas id="next-pieces" width="130" height="260"></canvas>
+      </section>
+
+      <section class="panel">
+        <h2>Top suggestions</h2>
+        <ol id="suggestions" class="suggestions"></ol>
+
+        <h2>Event log</h2>
+        <div id="log" class="log"></div>
+
+        <h2>Controls</h2>
+        <ul class="controls-list">
+          <li>Left/Right: Move</li>
+          <li>Up: Rotate</li>
+          <li>Down: Soft drop</li>
+          <li>Space: Hard drop</li>
+          <li>A: Toggle advise-only</li>
+          <li>S: Toggle timed assist</li>
+          <li>D: Emergency drop</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
