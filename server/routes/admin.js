@@ -4,6 +4,31 @@ const db = require('../db/init');
 const router = express.Router();
 
 /**
+ * GET /api/admin/counts
+ * Get counts of tracked products and stores
+ */
+router.get('/counts', (req, res) => {
+    db.db.all('SELECT COUNT(*) as count FROM products', (err, productResult) => {
+        if (err) {
+            console.error('Error fetching product count:', err);
+            return res.status(500).json({ error: 'Failed to fetch product count' });
+        }
+
+        db.db.all('SELECT COUNT(*) as count FROM stores', (err, storeResult) => {
+            if (err) {
+                console.error('Error fetching store count:', err);
+                return res.status(500).json({ error: 'Failed to fetch store count' });
+            }
+
+            res.json({
+                productCount: productResult[0]?.count || 0,
+                storeCount: storeResult[0]?.count || 0,
+            });
+        });
+    });
+});
+
+/**
  * GET /api/admin/products
  * Get all tracked products
  */

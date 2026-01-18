@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { adminService } from '../services/api';
+import { adminService, scraperService } from '../services/api';
 
 export default function Admin() {
     const [activeTab, setActiveTab] = useState('products');
@@ -8,8 +8,17 @@ export default function Admin() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // Scraper states
+    const [scrapingStatus, setScrapingStatus] = useState({
+        isActive: false,
+        progress: 0,
+        message: '',
+        productsScraped: 0,
+    });
+    const [scrapingEnabled, setScrapingEnabled] = useState(false);
+
     // Form states
-    const [newProduct, setNewProduct] = useState({ name: '', unit: '' });
+    const [newProduct, setNewProduct] = useState({ name: '', unit: 'item' });
     const [editingProduct, setEditingProduct] = useState(null);
     const [newStore, setNewStore] = useState({ name: '', url: '' });
     const [editingStore, setEditingStore] = useState(null);
@@ -17,6 +26,25 @@ export default function Admin() {
     useEffect(() => {
         loadData();
     }, []);
+
+    // Poll for scraping status
+    useEffect(() => {
+        if (!scrapingEnabled) return;
+
+        const interval = setInterval(async () => {
+            try {
+                const res = await scraperService.getStatus();
+                setScrapingStatus(res.data);
+                if (!res.data.isActive) {
+                    setScrapingEnabled(false);
+                }
+            } catch (err) {
+                console.error('Failed to get scraping status:', err);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [scrapingEnabled]);
 
     const loadData = async () => {
         try {
@@ -44,10 +72,21 @@ export default function Admin() {
         }
 
         try {
-            const res = await adminService.addProduct(newProduct.name, newProduct.unit);
+            const res = await adminService.addProduct(newProduct.name, newProduct.unit || 'item');
             setProducts([...products, res.data]);
             setNewProduct({ name: '', unit: 'item' });
             setError(null);
+
+            // Start scraping after product is added
+            setScrapingStatus({ isActive: true, progress: 0, message: 'Starting price collection...', productsScraped: 0 });
+            setScrapingEnabled(true);
+
+            try {
+                await scraperService.startScraping(res.data.id);
+            } catch (scraperErr) {
+                console.error('Failed to start scraping:', scraperErr);
+                setError('Product added but scraping failed to start: ' + scraperErr.message);
+            }
         } catch (err) {
             setError('Failed to add product: ' + err.message);
         }
@@ -136,6 +175,29 @@ export default function Admin() {
                     {error}
                 </div>
             )}
+
+            {/* Scraping Progress Display */}
+            {scrapingStatus.isActive || scrapingStatus.progress === 100 ? (
+                <div className={`rounded-lg p-6 shadow border ${scrapingStatus.progress === 100
+                    ? 'bg-green-50 border-green-200'
+                    : 'bg-blue-50 border-blue-200'
+                    }`}>
+                    <h3 className="text-lg font-semibold mb-2">
+                        {scrapingStatus.progress === 100 ? '✓ Collection Complete!' : 'Price Collection in Progress'}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">{scrapingStatus.message}</p>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                        <div
+                            className={`h-2 rounded-full transition-all ${scrapingStatus.progress === 100 ? 'bg-green-600' : 'bg-blue-600'
+                                }`}
+                            style={{ width: `${scrapingStatus.progress}%` }}
+                        ></div>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                        {scrapingStatus.progress}% complete • Products scraped: {scrapingStatus.productsScraped}
+                    </p>
+                </div>
+            ) : null}
 
             {/* Tabs */}
             <div className="flex gap-4 border-b">

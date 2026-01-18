@@ -5,6 +5,7 @@ import CheapestStores from './components/CheapestStores';
 import Alerts from './components/Alerts';
 import Reports from './components/Reports';
 import Admin from './components/Admin';
+import api from './services/api';
 import './App.css';
 
 function App() {
@@ -115,6 +116,23 @@ function App() {
 }
 
 function Dashboard() {
+  const [productCount, setProductCount] = useState(0);
+  const [storeCount, setStoreCount] = useState(0);
+
+  React.useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const res = await api.get('/admin/counts');
+        setProductCount(res.data.productCount);
+        setStoreCount(res.data.storeCount);
+      } catch (err) {
+        console.error('Failed to fetch counts:', err);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
   return (
     <div className="space-y-8">
       {/* Hero section */}
@@ -135,12 +153,12 @@ function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-lg p-6 border-l-4 border-blue-600">
           <h3 className="text-gray-600 text-sm font-semibold">Tracked Products</h3>
-          <p className="text-3xl font-bold mt-2">5</p>
-          <p className="text-xs text-gray-500 mt-1">milk, eggs, bread, butter, banana</p>
+          <p className="text-3xl font-bold mt-2">{productCount}</p>
+          <p className="text-xs text-gray-500 mt-1">currently tracking</p>
         </div>
         <div className="bg-white rounded-lg p-6 border-l-4 border-green-600">
           <h3 className="text-gray-600 text-sm font-semibold">Stores Monitored</h3>
-          <p className="text-3xl font-bold mt-2">5</p>
+          <p className="text-3xl font-bold mt-2">{storeCount}</p>
           <p className="text-xs text-gray-500 mt-1">across your city</p>
         </div>
         <div className="bg-white rounded-lg p-6 border-l-4 border-orange-600">

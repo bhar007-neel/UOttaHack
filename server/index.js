@@ -7,6 +7,7 @@ const priceRoutes = require('./routes/prices');
 const alertRoutes = require('./routes/alerts');
 const reportRoutes = require('./routes/reports');
 const adminRoutes = require('./routes/admin');
+const scraperRoutes = require('./routes/scraper');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/prices', priceRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/scraper', scraperRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { priceService } from '../services/api';
+import { getRelativeTime } from '../utils/formatTime';
 
 export default function CurrentPrices() {
   const [prices, setPrices] = useState({});
@@ -85,15 +86,15 @@ export default function CurrentPrices() {
                     <td className="px-6 py-4 text-sm">
                       <span
                         className={`px-2 py-1 rounded text-sm ${listing.availability === 'in_stock'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
                           }`}
                       >
                         {listing.availability === 'in_stock' ? 'In Stock' : 'Out of Stock'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
-                      {new Date(listing.timestamp).toLocaleTimeString()}
+                      {getRelativeTime(listing.timestamp)}
                     </td>
                   </tr>
                 ))}

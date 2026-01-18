@@ -43,4 +43,9 @@ export const adminService = {
   deleteStore: (id) => api.delete(`/admin/stores/${id}`),
 };
 
+export const scraperService = {
+  getStatus: () => api.get('/scraper/status'),
+  startScraping: (productId) => api.post(`/scraper/start?productId=${productId}`),
+};
+
 export default api;
