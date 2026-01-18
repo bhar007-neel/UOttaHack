@@ -4,6 +4,7 @@ import CurrentPrices from './components/CurrentPrices';
 import CheapestStores from './components/CheapestStores';
 import Alerts from './components/Alerts';
 import Reports from './components/Reports';
+import Admin from './components/Admin';
 import './App.css';
 
 function App() {
@@ -42,6 +43,9 @@ function App() {
               <Link to="/reports" className="text-gray-600 hover:text-gray-900 font-medium">
                 Reports
               </Link>
+              <Link to="/admin" className="text-gray-600 hover:text-gray-900 font-medium">
+                Manage Tracking
+              </Link>
             </nav>
           </div>
 
@@ -76,6 +80,13 @@ function App() {
               >
                 Reports
               </Link>
+              <Link
+                to="/admin"
+                className="block py-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Manage Tracking
+              </Link>
             </nav>
           )}
         </header>
@@ -87,6 +98,7 @@ function App() {
             <Route path="/prices" element={<CurrentPrices />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
 

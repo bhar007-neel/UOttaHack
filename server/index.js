@@ -6,6 +6,7 @@ const db = require('./db/init');
 const priceRoutes = require('./routes/prices');
 const alertRoutes = require('./routes/alerts');
 const reportRoutes = require('./routes/reports');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -30,6 +31,7 @@ db.initialize().catch((err) => {
 app.use('/api/prices', priceRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

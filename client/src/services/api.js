@@ -29,4 +29,18 @@ export const reportService = {
   getMonthlyTrend: () => api.get('/reports/monthly-trend'),
 };
 
+export const adminService = {
+  // Products
+  getProducts: () => api.get('/admin/products'),
+  addProduct: (name, unit = 'item') => api.post('/admin/products', { name, unit }),
+  updateProduct: (id, name, unit = 'item') => api.put(`/admin/products/${id}`, { name, unit }),
+  deleteProduct: (id) => api.delete(`/admin/products/${id}`),
+
+  // Stores
+  getStores: () => api.get('/admin/stores'),
+  addStore: (name, url = '') => api.post('/admin/stores', { name, url }),
+  updateStore: (id, name, url = '') => api.put(`/admin/stores/${id}`, { name, url }),
+  deleteStore: (id) => api.delete(`/admin/stores/${id}`),
+};
+
 export default api;
