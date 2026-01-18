@@ -123,12 +123,12 @@ function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-lg p-6 border-l-4 border-blue-600">
           <h3 className="text-gray-600 text-sm font-semibold">Tracked Products</h3>
-          <p className="text-3xl font-bold mt-2">4</p>
-          <p className="text-xs text-gray-500 mt-1">milk, rice, flour, eggs</p>
+          <p className="text-3xl font-bold mt-2">5</p>
+          <p className="text-xs text-gray-500 mt-1">milk, eggs, bread, butter, banana</p>
         </div>
         <div className="bg-white rounded-lg p-6 border-l-4 border-green-600">
           <h3 className="text-gray-600 text-sm font-semibold">Stores Monitored</h3>
-          <p className="text-3xl font-bold mt-2">3+</p>
+          <p className="text-3xl font-bold mt-2">5</p>
           <p className="text-xs text-gray-500 mt-1">across your city</p>
         </div>
         <div className="bg-white rounded-lg p-6 border-l-4 border-orange-600">
