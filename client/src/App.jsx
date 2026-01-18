@@ -5,6 +5,7 @@ import CheapestStores from './components/CheapestStores';
 import Alerts from './components/Alerts';
 import Reports from './components/Reports';
 import Admin from './components/Admin';
+import Chatbot from './components/Chatbot';
 import api from './services/api';
 import './App.css';
 
@@ -110,6 +111,9 @@ function App() {
             <p className="mt-2">Powered by Yellowcake API</p>
           </div>
         </footer>
+
+        {/* Chatbot Widget */}
+        <Chatbot />
       </div>
     </BrowserRouter>
   );

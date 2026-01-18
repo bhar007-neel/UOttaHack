@@ -8,6 +8,7 @@ const alertRoutes = require('./routes/alerts');
 const reportRoutes = require('./routes/reports');
 const adminRoutes = require('./routes/admin');
 const scraperRoutes = require('./routes/scraper');
+const chatbotRoutes = require('./routes/chatbot');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/scraper', scraperRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
