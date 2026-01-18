@@ -5,6 +5,7 @@ import CheapestStores from './components/CheapestStores';
 import Alerts from './components/Alerts';
 import Reports from './components/Reports';
 import Admin from './components/Admin';
+import Logo from './components/Logo';
 import api from './services/api';
 import './App.css';
 
@@ -17,10 +18,10 @@ function App() {
         {/* Header */}
         <header className="bg-white shadow-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="text-2xl">🛒</div>
+            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition">
+              <Logo size={48} />
               <h1 className="text-2xl font-bold text-gray-800">Food Price Dashboard</h1>
-            </div>
+            </Link>
 
             {/* Mobile menu button */}
             <button
