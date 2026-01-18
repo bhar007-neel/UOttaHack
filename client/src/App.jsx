@@ -20,7 +20,7 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition">
               <Logo size={48} />
-              <h1 className="text-2xl font-bold text-gray-800">Food Price Dashboard</h1>
+              <h1 className="text-2xl font-bold text-gray-800">BargainBasket</h1>
             </Link>
 
             {/* Mobile menu button */}
@@ -107,7 +107,7 @@ function App() {
         {/* Footer */}
         <footer className="bg-white border-t mt-12">
           <div className="max-w-7xl mx-auto px-4 py-6 text-center text-gray-600 text-sm">
-            <p>Food Price Dashboard • Helping low-income households save on groceries</p>
+            <p>BargainBasket • Helping low-income households save on groceries</p>
             <p className="mt-2">Powered by Yellowcake API</p>
           </div>
         </footer>

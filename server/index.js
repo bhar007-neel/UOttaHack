@@ -52,5 +52,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`🚀 Food Price Dashboard API running on port ${port} (${nodeEnv})`);
+    console.log(`🚀 BargainBasket API running on port ${port} (${nodeEnv})`);
 });

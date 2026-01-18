@@ -1,5 +1,5 @@
 {
-  "name": "food-price-dashboard",
+  "name": "bargain-basket",
   "version": "1.0.0",
   "description": "Track daily grocery prices and availability across stores using Yellowcake API",
   "main": "server/index.js",

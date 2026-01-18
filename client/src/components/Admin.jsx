@@ -18,7 +18,7 @@ export default function Admin() {
     const [scrapingEnabled, setScrapingEnabled] = useState(false);
 
     // Form states
-    const [newProduct, setNewProduct] = useState({ name: '', unit: 'item' });
+    const [newProduct, setNewProduct] = useState({ name: '', unit: '' });
     const [editingProduct, setEditingProduct] = useState(null);
     const [newStore, setNewStore] = useState({ name: '', url: '' });
     const [editingStore, setEditingStore] = useState(null);

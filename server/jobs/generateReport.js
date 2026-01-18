@@ -77,7 +77,7 @@ async function generateReport() {
 
 function generateHumanReadableReport(inflation, comparisons, trends) {
   const date = new Date().toISOString().split('T')[0];
-  let report = `FOOD PRICE DASHBOARD - WEEKLY REPORT
+  let report = `BARGAIN BASKET - WEEKLY REPORT
 Generated: ${date}
 
 ═════════════════════════════════════════════════════════════

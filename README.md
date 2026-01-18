@@ -1,4 +1,4 @@
-# Food Price Dashboard
+# BargainBasket
 
 Track daily grocery prices and availability across stores to help low-income households find the best deals on essentials.
 

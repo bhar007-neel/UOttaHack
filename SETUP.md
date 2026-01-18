@@ -1,4 +1,4 @@
-# Food Price Dashboard
+# BargainBasket
 
 A comprehensive dashboard for tracking grocery store prices and availability using the Yellowcake API. Helps low-income households find the best deals on essentials.
 
