@@ -35,11 +35,6 @@ const STORE_CONFIG = [
     },
     {
         id: 4,
-        name: 'Costco',
-        url: 'https://www.costco.ca',
-    },
-    {
-        id: 5,
         name: 'Metro',
         url: 'https://www.metro.ca',
     }
