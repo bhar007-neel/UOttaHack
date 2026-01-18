@@ -1,0 +1,33 @@
+{
+  "name": "food-price-dashboard",
+  "version": "1.0.0",
+  "description": "Track daily grocery prices and availability across stores using Yellowcake API",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "nodemon server/index.js",
+    "client:dev": "cd client && npm start",
+    "server:build": "tsc",
+    "db:migrate": "node server/migrations/init.js",
+    "start": "node server/index.js",
+    "collect:prices": "node server/jobs/collectPrices.js",
+    "generate:report": "node server/jobs/generateReport.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "node-cache": "^5.1.2",
+    "node-cron": "^4.2.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.0.0",
+    "concurrently": "^8.0.1",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.0"
+  }
+}
