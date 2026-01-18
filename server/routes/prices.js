@@ -50,6 +50,7 @@ router.get('/current', (req, res) => {
  */
 router.get('/cheapest', (req, res) => {
   const today = new Date().toISOString().split('T')[0];
+  console.log('Fetching cheapest prices for date:', today);
 
   db.db.all(
     `SELECT 
@@ -58,7 +59,8 @@ router.get('/cheapest', (req, res) => {
       price,
       normalizedPrice,
       discount,
-      availability
+      availability,
+      DATE(timestamp) as price_date
      FROM prices
      WHERE DATE(timestamp) = ?
      AND price = (
@@ -70,8 +72,17 @@ router.get('/cheapest', (req, res) => {
     [today, today],
     (err, rows) => {
       if (err) {
+        console.error('Error fetching cheapest prices:', err);
         res.status(500).json({ error: err.message });
         return;
+      }
+
+      console.log(`Found ${rows.length} cheapest price records for today`);
+      if (rows.length === 0) {
+        console.log('No prices found for today, checking available dates...');
+        db.db.all('SELECT DISTINCT DATE(timestamp) as date FROM prices LIMIT 5', (err, dates) => {
+          if (!err) console.log('Available dates in DB:', dates);
+        });
       }
 
       const result = {};

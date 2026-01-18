@@ -2,7 +2,7 @@
   "name": "food-price-dashboard-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5002",
   "dependencies": {
     "axios": "^1.4.0",
     "react": "^18.2.0",
@@ -12,7 +12,7 @@
     "tailwindcss": "^3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

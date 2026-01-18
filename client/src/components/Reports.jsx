@@ -9,18 +9,17 @@ export default function Reports() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const products = ['milk', 'rice', 'flour', 'eggs'];
+  const products = ['milk', 'eggs', 'bread', 'butter', 'banana'];
 
-  useEffect(() => {
-    fetchReport();
-  }, [reportType, selectedProduct]);
-
-  const fetchReport = async () => {
+  const fetchReport = React.useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
+      setReport(null); // Clear previous report
 
       let data;
+      console.log('Fetching report type:', reportType);
+
       if (reportType === 'inflation') {
         const res = await reportService.getWeeklyInflation();
         data = res.data;
@@ -32,14 +31,19 @@ export default function Reports() {
         data = res.data;
       }
 
+      console.log('Report data received:', data);
       setReport(data);
     } catch (err) {
-      setError(err.message);
       console.error('Error fetching report:', err);
+      setError(err.message || 'Failed to load report');
     } finally {
       setLoading(false);
     }
-  };
+  }, [reportType, selectedProduct]);
+
+  useEffect(() => {
+    fetchReport();
+  }, [fetchReport]);
 
   return (
     <div className="space-y-6">
@@ -110,6 +114,18 @@ export default function Reports() {
 }
 
 function InflationReport({ data }) {
+  console.log('InflationReport data:', data);
+
+  if (!data || !Array.isArray(data.products) || data.products.length === 0) {
+    return (
+      <div className="text-gray-500">
+        <h3 className="text-xl font-semibold mb-4">Weekly Inflation Summary</h3>
+        <p>No inflation data available.</p>
+        {data && !Array.isArray(data.products) && <p className="text-xs">Debug: products is {typeof data.products}</p>}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold">Weekly Inflation Summary</h3>
@@ -149,6 +165,17 @@ function InflationReport({ data }) {
 }
 
 function ComparisonReport({ data }) {
+  console.log('ComparisonReport data:', data);
+
+  if (!data || !data.stores || !Array.isArray(data.stores) || data.stores.length === 0) {
+    return (
+      <div className="text-gray-500">
+        <h3 className="text-xl font-semibold capitalize mb-4">{data?.productName || 'Product'} - Store Comparison</h3>
+        <p>No data available for this product.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold capitalize">{data.productName} - Store Comparison</h3>
@@ -195,10 +222,22 @@ function ComparisonReport({ data }) {
 }
 
 function TrendReport({ data }) {
+  console.log('TrendReport data:', data);
+
+  if (!data || !data.products || typeof data.products !== 'object' || Object.keys(data.products).length === 0) {
+    return (
+      <div className="text-gray-500">
+        <h3 className="text-xl font-semibold mb-4">30-Day Price Trends</h3>
+        <p>No trend data available.</p>
+      </div>
+    );
+  }
+
   const chartData = [];
 
   // Transform data for charts
   Object.entries(data.products).forEach(([productName, history]) => {
+    if (!Array.isArray(history)) return;
     // Take last 30 days
     history.slice(-30).forEach((point) => {
       let dateEntry = chartData.find((d) => d.date === point.date);
@@ -210,7 +249,7 @@ function TrendReport({ data }) {
     });
   });
 
-  const colors = ['#3b82f6', '#ef4444', '#f59e0b', '#10b981'];
+  const colors = ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6'];
 
   return (
     <div className="space-y-4">

@@ -7,6 +7,7 @@ export default function CheapestStores() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log('CheapestStores mounted, fetching data...');
     fetchCheapest();
   }, []);
 
@@ -14,6 +15,9 @@ export default function CheapestStores() {
     try {
       setLoading(true);
       const response = await priceService.getCheapestStores();
+      console.log('CheapestStores API response:', response);
+      console.log('CheapestStores API response data:', response.data);
+      console.log('Number of products:', Object.keys(response.data).length);
       setCheapest(response.data);
       setError(null);
     } catch (err) {
@@ -23,6 +27,8 @@ export default function CheapestStores() {
       setLoading(false);
     }
   };
+
+  console.log('Rendering CheapestStores, cheapest:', cheapest, 'loading:', loading);
 
   if (loading) {
     return <div className="text-gray-500">Loading...</div>;
@@ -34,6 +40,10 @@ export default function CheapestStores() {
         Error: {error}
       </div>
     );
+  }
+
+  if (Object.keys(cheapest).length === 0) {
+    return <div className="text-gray-500">No deals available today</div>;
   }
 
   return (
